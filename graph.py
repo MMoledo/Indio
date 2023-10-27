@@ -49,13 +49,15 @@ class DeforestationAnalysis:
 
     def filter_inc_data(self):
         """Filter the 'inc' dataset based on user input."""
-        if "Todos" in self.classe_selected:
-            df_filtered = self.df_inc.copy()
-        else:
-            df_filtered = self.df_inc[self.df_inc["Classe"].isin(self.classe_selected)]
+        df_filtered = self.df_inc.copy()
+        if "Todos" not in self.classe_selected:
+            df_filtered = df_filtered[df_filtered["Classe"].isin(self.classe_selected)]
         if "Todos" not in self.estado_selected:
             df_filtered = df_filtered[df_filtered["uf"].isin(self.estado_selected)]
+        if self.ano_selected != "Todos":
+            df_filtered = df_filtered[df_filtered["year"] == int(self.ano_selected)]
         return df_filtered
+
 
     def filter_ind_data(self):
         """Filter the 'ind' dataset based on user input."""
